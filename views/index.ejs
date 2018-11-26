@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <% include partials/head %>
+</head>
+<body>
+<% include partials/menu %>
+<div class="container-fluid bg-3 text-center">
+    <h3><%= page %></h3><br>
+    <div class="row">
+        <form method="POST" action="/login_via_form" id="form">
+            <p><input type="text" id="username" name="username" placeholder="username"/></p>
+            <br>
+            <p><input type="text" id="password" name="password" placeholder="password"/></p>
+            <br>
+
+            <p><input type="submit" value="Sign In via Form" id="submit-form"></p>
+        </form>
+        <br>
+        <p><input type="submit" value="Sign In via JS" id="signin-submit" onclick="return loginViaJs();"></p>
+    </div>
+</div>
+</body>
+<% include partials/script %>
+</html>
