@@ -136,4 +136,16 @@ router.get('/.well-known/openid-configuration', (req, res) => {
     )
 })
 
+router.get('/oauth2/v1/authorize', function(req, res) {
+    res.writeHead(302, {
+        'Location': config.schema+"://"+config.domain+"/login/login.htm"
+    })
+});
+
+
+router.get('/login/login.htm', (req, res) => {
+    res.render('index', {page:'Home', menuId:'home'});
+})
+
+
 module.exports = router
