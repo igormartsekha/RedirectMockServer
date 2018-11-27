@@ -51,8 +51,8 @@ app.use(bodyParser.json());
 app.disable('etag');
 
 
-app.use(require('./custom_routing'));
-// app.use(require('./okta_oauth_routing'));
+// app.use(require('./custom_routing'));
+app.use(require('./okta_oauth_routing'));
 
 
 app.listen(config.port, () => console.log(`Example app listening on port ${config.port}!`))
