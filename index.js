@@ -40,7 +40,7 @@ var http = require('http');
 //         res.redirect('https://' + req.headers.host + req.url);
 //     }
 // });
-app.use(sslRedirect());
+// app.use(sslRedirect());
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use('/', express.static(path.join(__dirname, 'public')))

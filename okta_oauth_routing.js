@@ -136,15 +136,62 @@ router.get('/.well-known/openid-configuration', (req, res) => {
     )
 })
 
-router.get('/oauth2/v1/authorize', function(req, res) {
+router.get('/oauth2/v1/authorize', (req, res) => {
+    // console.log(config.schema+"://"+config.domain+"/login/login.htm")
     res.writeHead(302, {
-        'Location': config.schema+"://"+config.domain+"/login/login.htm"
+        'Location': "/login/login.htm"
     })
+    res.end();
 });
 
 
 router.get('/login/login.htm', (req, res) => {
     res.render('index', {page:'Home', menuId:'home'});
+})
+
+
+router.get('/login/get_user_image', (req,res) => {
+    res.json({
+    "result": "success",
+    "pwdImg": "https://ok7static.oktacdn.com/assets/img/security/road.2b3c2e941c4a1691a323979de39d9b5d.jpg",
+    "imageDescription": "Road"
+})
+})
+
+router.post('/api/v1/authn', (req,res) => {
+    res.json({
+        "redirectUrl":"/login/sessionCookieRedirect?checkAccountSetupComplete=true&token=20111KN9GjpGHpKxoSHYKvT6WF5wZ5w_FuIrf1G6cpmQQuEd4XbNsW7&redirectUrl=https%3A%2F%2Flohika-imartsekha.okta.com%2Foauth2%2Fv1%2Fauthorize%2Fredirect%3Fokta_key%3Dn_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw",
+        "expiresAt": "2018-11-27T14:55:47.000Z",
+        "status": "SUCCESS",
+        "sessionToken": "20111KN9GjpGHpKxoSHYKvT6WF5wZ5w_FuIrf1G6cpmQQuEd4XbNsW7",
+        "_embedded": {
+            "user": {
+                "id": "00u4o9wncJE0LvgJt356",
+                "passwordChanged": "2018-11-19T14:32:01.000Z",
+                "profile": {
+                    "login": "imartsekha@lohika.com",
+                    "firstName": "Igor",
+                    "lastName": "Martsekha",
+                    "locale": "en",
+                    "timeZone": "America/Los_Angeles"
+                }
+            }
+        }
+    })
+})
+
+router.get('/login/sessionCookieRedirect', (req, res) => {
+    res.writeHead(302, {
+    'Location': "/oauth2/v1/authorize/redirect?okta_key=n_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw"
+})
+res.end();
+})
+
+router.get('/oauth2/v1/authorize/redirect', (req, res) => {
+    res.writeHead(302, {
+    'Location': config.appUrl+"?code=EWLBblokhOchMmOI86Aq&state=HlLs-0aUPh5qgpzEfZaAJw"
+})
+res.end();
 })
 
 
