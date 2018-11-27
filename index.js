@@ -3,6 +3,7 @@
  */
 
 const express = require('express')
+var sslRedirect = require('heroku-ssl-redirect');
 const path = require('path')
 var bodyParser = require('body-parser');
 const app = express()
@@ -31,14 +32,15 @@ var http = require('http');
 // };
 
 
-app.use(function(req, res, next) {
-    console.log(req.secure)
-    if (req.secure) {
-        next();
-    } else {
-        res.redirect('https://' + req.headers.host + req.url);
-    }
-});
+// app.use(function(req, res, next) {
+//     console.log(req.secure)
+//     if (req.secure) {
+//         next();
+//     } else {
+//         res.redirect('https://' + req.headers.host + req.url);
+//     }
+// });
+app.use(sslRedirect());
 
 app.use('/public', express.static(path.join(__dirname, 'public')))
 app.use('/', express.static(path.join(__dirname, 'public')))
