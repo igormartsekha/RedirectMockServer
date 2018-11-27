@@ -12,11 +12,11 @@ var https = require('https');
 var http = require('http');
 
 
-var privateKey  = fs.readFileSync('./key.pem');//fs.readFileSync('private.key', 'utf8');
-// var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
-var certificate = fs.readFileSync('./cert.pem');//fs.readFileSync('mydomain.csr', 'utf8');
-
-var options = {key: privateKey, cert: certificate};
+// var privateKey  = fs.readFileSync('./key.pem');//fs.readFileSync('private.key', 'utf8');
+// // var certificate = fs.readFileSync('sslcert/server.crt', 'utf8');
+// var certificate = fs.readFileSync('./cert.pem');//fs.readFileSync('mydomain.csr', 'utf8');
+//
+// var options = {key: privateKey, cert: certificate};
 
 
 // var key = fs.readFileSync('private.key');
@@ -53,7 +53,7 @@ app.use(require('./custom_routing'));
 // app.use(require('./okta_oauth_routing'));
 
 
-// app.listen(config.port, () => console.log(`Example app listening on port ${config.port}!`))
+app.listen(config.port, () => console.log(`Example app listening on port ${config.port}!`))
 
-https.createServer(options, app).listen(443);
-http.createServer(app).listen(80);
+// https.createServer(options, app).listen(443);
+// https.createServer(app).listen(80);
