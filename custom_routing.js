@@ -3,6 +3,7 @@
  */
 var express = require('express');
 var router = express.Router();
+var request=require('request');
 const config = require('./config')
 
 //Middle ware that is specific to this router
@@ -17,27 +18,13 @@ router.get('/', (req, res) => res.send('Hello World from Custom routing!'))
 router.get('/.well-known/openid-configuration', (req, res) =>  {
     res.json(
             {
-                "issuer"
-            :
-                "https://wdawson.trexcloud.com",
-                    "authorization_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/authorize",
-                    "token_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/token",
-                    "userinfo_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/userinfo",
-                    "registration_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/clients",
-                    "jwks_uri"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/keys",
-                    "response_types_supported"
-            :
-                [
+                "issuer": "https://wdawson.trexcloud.com",
+                "authorization_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/authorize",
+                "token_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/token",
+                "userinfo_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/userinfo",
+                "registration_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/clients",
+                "jwks_uri": "https://wdawson.trexcloud.com/oauth2/v1/keys",
+                "response_types_supported": [
                     "code",
                     "id_token",
                     "code id_token",
@@ -45,35 +32,25 @@ router.get('/.well-known/openid-configuration', (req, res) =>  {
                     "id_token token",
                     "code id_token token"
                 ],
-                    "response_modes_supported"
-            :
-                [
+                "response_modes_supported": [
                     "query",
                     "fragment",
                     "form_post",
                     "okta_post_message"
                 ],
-                    "grant_types_supported"
-            :
-                [
+                "grant_types_supported": [
                     "authorization_code",
                     "implicit",
                     "refresh_token",
                     "password"
                 ],
-                    "subject_types_supported"
-            :
-                [
+                "subject_types_supported": [
                     "public"
                 ],
-                    "id_token_signing_alg_values_supported"
-            :
-                [
+                "id_token_signing_alg_values_supported": [
                     "RS256"
                 ],
-                    "scopes_supported"
-            :
-                [
+                "scopes_supported": [
                     "openid",
                     "email",
                     "profile",
@@ -82,18 +59,14 @@ router.get('/.well-known/openid-configuration', (req, res) =>  {
                     "offline_access",
                     "groups"
                 ],
-                    "token_endpoint_auth_methods_supported"
-            :
-                [
+                "token_endpoint_auth_methods_supported": [
                     "client_secret_basic",
                     "client_secret_post",
                     "client_secret_jwt",
                     "private_key_jwt",
                     "none"
                 ],
-                    "claims_supported"
-            :
-                [
+                "claims_supported": [
                     "iss",
                     "ver",
                     "sub",
@@ -126,44 +99,28 @@ router.get('/.well-known/openid-configuration', (req, res) =>  {
                     "at_hash",
                     "c_hash"
                 ],
-                    "code_challenge_methods_supported"
-            :
-                [
+                "code_challenge_methods_supported": [
                     "S256"
                 ],
-                    "introspection_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/introspect",
-                    "introspection_endpoint_auth_methods_supported"
-            :
-                [
+                "introspection_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/introspect",
+                "introspection_endpoint_auth_methods_supported": [
                     "client_secret_basic",
                     "client_secret_post",
                     "client_secret_jwt",
                     "private_key_jwt",
                     "none"
                 ],
-                    "revocation_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/revoke",
-                    "revocation_endpoint_auth_methods_supported"
-            :
-                [
+                "revocation_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/revoke",
+                "revocation_endpoint_auth_methods_supported": [
                     "client_secret_basic",
                     "client_secret_post",
                     "client_secret_jwt",
                     "private_key_jwt",
                     "none"
                 ],
-                    "end_session_endpoint"
-            :
-                "https://wdawson.trexcloud.com/oauth2/v1/logout",
-                    "request_parameter_supported"
-            :
-                true,
-                    "request_object_signing_alg_values_supported"
-            :
-                [
+                "end_session_endpoint": "https://wdawson.trexcloud.com/oauth2/v1/logout",
+                "request_parameter_supported": true,
+                "request_object_signing_alg_values_supported": [
                     "HS256",
                     "HS384",
                     "HS512",
@@ -188,6 +145,24 @@ res.end();
 })
 
 
+router.get('/get_user_image', (req, res) => {
+    request.get('https://lohika-imartsekha.okta.com/login/getimage?username=imartsekha@lohika.com',function(err,response,body){
+        console.log(body);
+        if(err) {
+
+        } else if(res.statusCode !== 200 ) {
+
+        } else {
+            body = JSON.parse(body)
+            body.pwdImg = 'https://lohika-imartsekha.okta.com' + body.pwdImg
+            res.json(body)
+            // res.end();
+        }
+    });
+    ////https://lohika-imartsekha.okta.com/login/getimage?username=imartsekha@lohika.com',
+
+})
+
 // Open link for first time to redirect and return 302 by default
 router.get('/auth_process_user', (req, res) => {
     res.writeHead(302, {
@@ -197,8 +172,6 @@ router.get('/auth_process_user', (req, res) => {
 res.end();
 })
 
-module.exports = router;
-
 
 router.get('/get_login_form', (req, res) => {
     res.render('index', {page:'Home', menuId:'home'});
@@ -207,8 +180,8 @@ router.get('/get_login_form', (req, res) => {
 
 router.post('/login_via_form', (req, res) => {
     res.writeHead(302, {
-    // 'Location': schema+"://"+domain+":"+port+"/second_redirect"
-    'Location': config.appUrl
+    'Location': schema+"://"+domain+":"+port+"/first_redirect"
+    // 'Location': config.appUrl
 })
 res.end();
 })
@@ -232,7 +205,7 @@ router.post('/login_via_js', (req, res) => {
             }
         }
     }
-});
+    });
 })
 
 // First redirect

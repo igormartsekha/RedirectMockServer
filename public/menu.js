@@ -22,3 +22,20 @@ function loginViaJs() {
     return true;
 }
 
+function loadAvatar() {
+    $.ajax({
+        url: 'get_user_image',
+        dataType: 'json',
+        type: 'get',
+        contentType: 'application/json',
+        processData: false,
+        success: function( data, textStatus, jQxhr ){
+            console.log( data );
+            $("#avatar").attr("src", data.pwdImg);
+        },
+        error: function( jqXhr, textStatus, errorThrown ){
+            console.log( errorThrown );
+        }
+    });
+}
+

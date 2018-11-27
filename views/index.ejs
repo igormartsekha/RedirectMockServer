@@ -7,9 +7,11 @@
 <% include partials/menu %>
 <div class="container-fluid bg-3 text-center">
     <h3><%= page %></h3><br>
+    <div class="row"><img style="width: 50px;height: 50px;" id="avatar"/></div>
+    <p></p>
     <div class="row">
         <form method="POST" action="/login_via_form" id="form">
-            <p><input type="text" id="username" name="username" placeholder="username"/></p>
+            <p><input type="text" id="username" name="username" placeholder="username" onfocusout="loadAvatar()"/></p>
             <br>
             <p><input type="text" id="password" name="password" placeholder="password"/></p>
             <br>
