@@ -5,7 +5,7 @@ var config ={}
 config.port = process.env.PORT || 8080;
 
 config.schema = "https"
-config.domain = "redirect-mock-service.herokuapp.com"
+config.domain = "redirect-mock-service-okta.herokuapp.com"
 config.appSchema = "net.openid.appauthdemo"
 config.appUrl = config.appSchema+":/oauth2redirect";
 
