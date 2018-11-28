@@ -139,7 +139,7 @@ router.get('/.well-known/openid-configuration', (req, res) => {
 router.get('/oauth2/v1/authorize', (req, res) => {
     // console.log(config.schema+"://"+config.domain+"/login/login.htm")
     res.writeHead(302, {
-        'Location': "/login/login.htm"
+        'Location': config.schema+"://"+config.domain+"/login/login.htm"
     })
     res.end();
 });
@@ -160,7 +160,7 @@ router.get('/login/get_user_image', (req,res) => {
 
 router.post('/api/v1/authn', (req,res) => {
     res.json({
-        "redirectUrl":"/login/sessionCookieRedirect?checkAccountSetupComplete=true&token=20111KN9GjpGHpKxoSHYKvT6WF5wZ5w_FuIrf1G6cpmQQuEd4XbNsW7&redirectUrl=https%3A%2F%2Flohika-imartsekha.okta.com%2Foauth2%2Fv1%2Fauthorize%2Fredirect%3Fokta_key%3Dn_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw",
+        "redirectUrl":config.schema+"://"+config.domain+"/login/sessionCookieRedirect?checkAccountSetupComplete=true&token=20111KN9GjpGHpKxoSHYKvT6WF5wZ5w_FuIrf1G6cpmQQuEd4XbNsW7&redirectUrl=https%3A%2F%2Flohika-imartsekha.okta.com%2Foauth2%2Fv1%2Fauthorize%2Fredirect%3Fokta_key%3Dn_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw",
         "expiresAt": "2018-11-27T14:55:47.000Z",
         "status": "SUCCESS",
         "sessionToken": "20111KN9GjpGHpKxoSHYKvT6WF5wZ5w_FuIrf1G6cpmQQuEd4XbNsW7",
@@ -182,7 +182,7 @@ router.post('/api/v1/authn', (req,res) => {
 
 router.get('/login/sessionCookieRedirect', (req, res) => {
     res.writeHead(302, {
-    'Location': "/oauth2/v1/authorize/redirect?okta_key=n_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw"
+    'Location': config.schema+"://"+config.domain+"/oauth2/v1/authorize/redirect?okta_key=n_F8ztulVcpWMWfAGA5f7QlOlIRQjkiY8P2BCKr2qEw"
 })
 res.end();
 })
